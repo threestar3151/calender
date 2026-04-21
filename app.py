@@ -1,0 +1,36 @@
+import streamlit as st
+from streamlit_calendar import calendar
+
+st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
+
+st.title("🗓️ GS25 부문 취합 및 마감 스케줄")
+
+# 올려주신 이미지 내용을 바탕으로 [담당자 / 취합방법 / 빨간박스 회신주체]를 반영했습니다.
+calendar_events = [
+    {"title": "📢 [마케팅] 토스 설치 (최수민 / 엑셀 / 부문지원팀)", "start": "2026-04-20", "end": "2026-04-30", "color": "#FF4B4B"},
+    {"title": "🧼 [지원] 선도위생 제외 (이충언 / 엑셀 / 지역팀)", "start": "2026-04-20", "end": "2026-04-27", "color": "#3D9DF3"},
+    {"title": "🥤 [MD] OSC 장려금 (이종혁 / 엑셀 / 부문지원팀)", "start": "2026-04-20", "end": "2026-04-28", "color": "#00C092"},
+]
+
+calendar_options = {
+    "headerToolbar": {
+        "left": "today prev,next",
+        "center": "title",
+        "right": "dayGridMonth"
+    },
+    "initialView": "dayGridMonth",
+    "locale": "ko",
+}
+
+calendar(events=calendar_events, options=calendar_options)
+
+# 사이드바에도 이미지의 디테일한 내용을 업데이트했습니다.
+st.sidebar.header("📋 세부 업무 가이드")
+st.sidebar.write("**1. 토스 페이스페이 설치** (마케팅_제2026-004호)")
+st.sidebar.caption("- 담당자: 최수민 매니저 \n- 기한: 4/30(목) \n- 방법: 엑셀 취합 \n- 주체: 부문지원팀 (빨간박스 기준)")
+
+st.sidebar.write("**2. 05월 선도위생 평가제외점** (지원_제2026-021호)")
+st.sidebar.caption("- 담당자: 이충언 매니저 \n- 기한: 4/27(월) \n- 방법: 엑셀 취합 \n- 주체: 지역팀 (빨간박스 기준)")
+
+st.sidebar.write("**3. 음료 전용 엔드형 OSC 장려금** (MD_제2026-020호)")
+st.sidebar.caption("- 담당자: 이종혁 매니저 \n- 기한: 4/28(화) \n- 방법: 엑셀 취합 \n- 주체: 부문지원팀 (빨간박스 기준)")
