@@ -1,10 +1,41 @@
 import streamlit as st
 from streamlit_calendar import calendar
 
+# 1. 모바일에서 좌우 여백을 최소화하도록 설정
 st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
-st.title("🗓️ GS25 4부문 취합 및 마감일 안내")
 
-# \n 을 사용해서 내용을 여러 줄로 나누었습니다.
+st.title("🗓️ GS25 4부문 취합 및 마감 스케줄")
+
+# 2. 모바일/PC 통합 디자인 마법 (반응형 CSS)
+calendar_css = """
+/* 기본 줄바꿈 설정 */
+.fc-event-main {
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+    line-height: 1.3 !important;
+    padding: 2px !important;
+}
+
+/* 모바일 화면(폭 768px 이하)일 때 폰트 크기 및 높이 조절 */
+@media (max-width: 768px) {
+    .fc-header-toolbar {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .fc-toolbar-title {
+        font-size: 1.1em !important;
+    }
+    .fc-event-title {
+        font-size: 0.7em !important;  /* 모바일에서 폰트 조금 더 작게 */
+    }
+    .fc-daygrid-day-number {
+        font-size: 0.8em !important;
+    }
+}
+"""
+
+# 3. 누적 데이터 리스트 (기존 내용 유지)
 calendar_events = [
     {
         "title": "📢 [마케팅] 토스 설치\n👤 담당: 최수민\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
@@ -38,29 +69,24 @@ calendar_events = [
     }
 ]
 
+# 4. 달력 설정 (모바일용 '리스트 뷰' 버튼 추가)
 calendar_options = {
     "headerToolbar": {
-        "left": "today prev,next",
+        "left": "prev,next today",
         "center": "title",
-        "right": "dayGridMonth"
+        "right": "dayGridMonth,listMonth"  # 'listMonth' 버튼이 모바일에서 꿀기능입니다!
     },
     "initialView": "dayGridMonth",
     "locale": "ko",
+    "height": "auto",                  # 화면 높이에 맞춰 자동 조절
+    "handleWindowResize": True,         # 화면 크기 변경 시 자동 대응
 }
 
-# ⭐️ 핵심: 달력 '내부'로 직접 쏴주는 줄바꿈 디자인 코드입니다.
-calendar_css = """
-.fc-event-main {
-    white-space: pre-wrap !important;  /* 줄바꿈 강제 허용 */
-    word-wrap: break-word !important;  /* 단어가 길면 자르기 */
-    font-size: 0.85em !important;      /* 글씨 크기 조정 */
-    line-height: 1.4 !important;       /* 줄 간격 */
-    padding: 3px !important;           /* 내부 여백 */
-}
-.fc-event-title {
-    white-space: pre-wrap !important;
-}
-"""
+# 최종 달력 실행
+calendar(
+    events=calendar_events, 
+    options=calendar_options, 
+    custom_css=calendar_css
+)
 
-# 맨 뒤에 custom_css=calendar_css 를 추가해 달력 안쪽으로 밀어넣습니다.
-calendar(events=calendar_events, options=calendar_options, custom_css=calendar_css)
+st.info("💡 모바일에서 화면이 좁다면 우측 상단의 'list' 버튼을 눌러보세요! 리스트 형태로 깔끔하게 보입니다.")
