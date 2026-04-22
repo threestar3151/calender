@@ -4,7 +4,7 @@ from streamlit_calendar import calendar
 # 1. 모바일에서 좌우 여백을 최소화하도록 설정
 st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
 
-st.title("🗓️ GS25 4부문 취합 및 마감 스케줄")
+st.title("🗓️ GS25 취합 및 마감 스케줄")
 
 # 2. 모바일/PC 통합 디자인 마법 (반응형 CSS)
 calendar_css = """
