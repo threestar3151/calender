@@ -2,9 +2,9 @@ import streamlit as st
 from streamlit_calendar import calendar
 
 st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
-st.title("🗓️ GS25 취합 및 마감 스케줄")
+st.title("🗓️ GS25 부문 취합 및 마감 스케줄")
 
-# 모바일 및 PC 통합 줄바꿈 디자인 (CSS)
+# 모바일/PC 줄바꿈 최적화 CSS
 calendar_css = """
 .fc-event-main {
     white-space: pre-wrap !important;
@@ -17,59 +17,57 @@ calendar_css = """
 }
 """
 
-# 누적된 취합 일정 데이터 (마감일 당일 표기)
+# 누적 일정 데이터
 calendar_events = [
-    # --- 4월 일정 (기존 누적분) ---
+    # --- 과거 데이터 누적분 (4월 ~ 5월 3주차 초반) ---
     {"title": "📢 [마케팅] 토스 설치\n👤 담당: 최수민\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-30", "color": "#D98880"},
     {"title": "🧼 [지원] 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-04-27", "color": "#7FB3D5"},
     {"title": "🥤 [MD] OSC 장려금\n👤 담당: 이종혁\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-28", "color": "#7DCEA0"},
-    {"title": "🛒 [지원] 장보기 추가\n👤 담당: 양희진\n📝 방법: 시스템\n🎯 주체: OFC개별", "start": "2026-04-27", "color": "#C39BD3"},
-    {"title": "🛵 [O4O] 배달/픽업\n👤 담당: 박정은\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-04-27", "color": "#F0B27A"},
-    {"title": "🍗 [MD] 치킨25 소모품\n👤 담당: 최원필\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-04-30", "color": "#73C6B6"},
-    
-    # --- 5월 일정 (신규 및 누적) ---
     {"title": "🏪 [지원] 특화매대 도입\n👤 담당: 권순백\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#F7DC6F"},
     {"title": "🛵 [O4O] 배민/쿠팡 오픈\n👤 담당: 상현수\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-11", "color": "#FAD7A0"},
-    
-    # --- 신규 추가 내용 (이미지 확인분) ---
+    {"title": "🛵 [O4O] 배달/픽업 8차\n👤 담당: 박정은\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#AED6F1"},
+    {"title": "📊 [지원] 재고조사 지연점\n👤 담당: 유찬울\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#A9DFBF"},
+    {"title": "🥤 [MD] OSC 장비 규격\n👤 담당: 이종혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#E59866"},
+    {"title": "🍗 [MD] 치킨25 소급취합\n👤 담당: 최원필\n📝 방법: 점포경영시스템\n🎯 주체: OFC개별", "start": "2026-05-31", "color": "#F9E79F"},
+
+    # --- 신규 추가 데이터 (5/18 안내분 - 총 8건) ---
     {
-        "title": "🛵 [O4O] 배달/픽업 8차\n👤 담당: 박정은\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-05-18", 
-        "color": "#AED6F1"  # 연한 파스텔 블루
+        "title": "📸 [MD] 음료 엔드OSC 진열사진\n👤 담당: 이종혁\n📝 방법: 시스템\n🎯 주체: OFC개별", 
+        "start": "2026-05-22", "color": "#F1948A" # 파스텔 레드
     },
     {
-        "title": "📊 [지원] 재고조사 지연점\n👤 담당: 유찬울\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-05-18", 
-        "color": "#A9DFBF"  # 연한 파스텔 그린
+        "title": "🍧 [MD] 6월 스무디 요청점\n👤 담당: 이규혁\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
+        "start": "2026-05-25", "color": "#D7BDE2" # 파스텔 퍼플
     },
     {
-        "title": "🥤 [MD] OSC 장비 규격\n👤 담당: 이종혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-05-18", 
-        "color": "#E59866"  # 연한 테라코타
+        "title": "🧼 [지원] 6월 선도위생 제외점\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", 
+        "start": "2026-05-25", "color": "#85C1E9" # 파스텔 블루
     },
     {
-        "title": "🍗 [MD] 치킨25 소급취합\n👤 담당: 최원필\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-05-31", 
-        "color": "#F9E79F"  # 연한 레몬 옐로우
+        "title": "🦟 [MD] 방충용품 집기 입고\n👤 담당: 박거동\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
+        "start": "2026-05-25", "color": "#A3E4D7" # 파스텔 틸(Teal)
+    },
+    {
+        "title": "🛒 [지원] 6월 장보기 추가\n👤 담당: 양희진\n📝 방법: 시스템\n🎯 주체: OFC개별", 
+        "start": "2026-05-25", "color": "#F8C471" # 파스텔 옐로오렌지
+    },
+    {
+        "title": "🍦 [MD] 6월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
+        "start": "2026-05-25", "color": "#BB8FCE" # 파스텔 바이올렛
+    },
+    {
+        "title": "❄️ [MD] 디핀다트 냉동고\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
+        "start": "2026-05-25", "color": "#73C6B6" # 파스텔 민트
+    },
+    {
+        "title": "🔍 [지원] 마스터 전수점검 오류\n👤 담당: 김민정\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
+        "start": "2026-06-05", "color": "#E59866" # 파스텔 오렌지
     }
 ]
 
 calendar_options = {
-    "headerToolbar": {
-        "left": "prev,next today",
-        "center": "title",
-        "right": "dayGridMonth,listMonth"
-    },
-    "initialView": "dayGridMonth",
-    "locale": "ko",
-    "height": "auto",
+    "headerToolbar": {"left": "prev,next today", "center": "title", "right": "dayGridMonth,listMonth"},
+    "initialView": "dayGridMonth", "locale": "ko", "height": "auto",
 }
 
 calendar(events=calendar_events, options=calendar_options, custom_css=calendar_css)
-
-# 사이드바 업무 상세 가이드 업데이트
-st.sidebar.header("📋 이번 주 주요 공문")
-st.sidebar.info("**O4O_제2026-016호**\n- 배달/픽업 8차 정기 취합\n- 마감: 5/18(월)\n- 비고: 사업자/영업신고증 사진 필수")
-st.sidebar.info("**지원_제2026-024호**\n- 재고조사 180일 지연점 일정 수립\n- 마감: 5/18(월)\n- 비고: 대상점 34점 확인")
-st.sidebar.info("**MD_제2026-023호**\n- 음료 엔드형 OSC 장비 규격 취합\n- 마감: 5/18(월)\n- 비고: 228점 규격 정보(6단/5단)")
-st.sidebar.info("**MD_제2026-022호**\n- 치킨25 4월 소모품 소급 취합\n- 마감: 5/31(일)\n- 비고: 미진행 점포 대상")
