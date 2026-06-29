@@ -5,11 +5,17 @@ st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
 st.title("🗓️ GS25 부문 취합 및 마감 스케줄")
 
 calendar_css = """
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
+
 .fc-event-main {
     white-space: pre-wrap !important;
     word-wrap: break-word !important;
     line-height: 1.3 !important;
     padding: 2px !important;
+    font-family: 'Nanum Gothic', sans-serif !important;
+}
+.fc-event-title {
+    font-family: 'Nanum Gothic', sans-serif !important;
 }
 @media (max-width: 768px) {
     .fc-event-title { font-size: 0.75em !important; }
@@ -17,7 +23,7 @@ calendar_css = """
 """
 
 calendar_events = [
-    # --- 과거 누적 데이터 (생략 없이 전체 포함) ---
+    # --- 과거 누적 데이터 (4월 ~ 6월 3주차) ---
     {"title": "📢 [마케팅] 토스 설치\n👤 담당: 최수민\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-30", "color": "#D98880"},
     {"title": "🧼 [지원] 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-04-27", "color": "#7FB3D5"},
     {"title": "🥤 [MD] OSC 장려금\n👤 담당: 이종혁\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-28", "color": "#7DCEA0"},
@@ -56,27 +62,26 @@ calendar_events = [
     {"title": "🛵 [O4O] 요기요 미운영점 정리\n👤 담당: 상현수\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-22", "color": "#F1948A"},
     {"title": "📞 [지원] 점포 전화번호 수정\n👤 담당: 허수연\n📝 방법: MS폼즈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#E59866"},
     {"title": "🥤 [MD] 7월 엔드OSC 취합\n👤 담당: 이종혁\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-29", "color": "#A9DFBF"},
+    
+    # --- 6월 4주차 데이터 ---
+    {"title": "💊 [MD] 컨디션 젤리스틱 행사\n👤 담당: 고웅\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#D7BDE2"},
+    {"title": "🍦 [MD] 7월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#FAD7A0"},
+    {"title": "🛵 [O4O] 배달/픽업 11차\n👤 담당: 홍민규\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#85C1E9"},
+    {"title": "🛒 [지원] 7월 장보기 추가\n👤 담당: 양희진\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#F7DC6F"},
+    {"title": "🔍 [지원] 마스터 점검 2차 오류\n👤 담당: 김민정\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-30", "color": "#F1948A"},
 
-    # --- 6월 4주차 신규 데이터 (총 5건) ---
+    # --- 7월 1주차 신규 데이터 (총 3건) ---
     {
-        "title": "💊 [MD] 컨디션 젤리스틱 행사\n👤 담당: 고웅\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-06-29", "color": "#D7BDE2"  # 파스텔 퍼플
+        "title": "🎒 [지원] 펩시 보냉백 발주\n👤 담당: 임명섭\n📝 방법: 시스템\n🎯 주체: OFC개별", 
+        "start": "2026-07-05", "color": "#85C1E9"  # 파스텔 스카이블루
     },
     {
-        "title": "🍦 [MD] 7월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-06-29", "color": "#FAD7A0"  # 파스텔 피치
+        "title": "📸 [MD] 7월 엔드OSC 사진\n👤 담당: 이종혁\n📝 방법: 시스템\n🎯 주체: OFC개별", 
+        "start": "2026-07-10", "color": "#F8C471"  # 파스텔 오렌지옐로우
     },
     {
-        "title": "🛵 [O4O] 배달/픽업 11차\n👤 담당: 홍민규\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-06-29", "color": "#85C1E9"  # 파스텔 블루
-    },
-    {
-        "title": "🛒 [지원] 7월 장보기 추가\n👤 담당: 양희진\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-06-29", "color": "#F7DC6F"  # 파스텔 옐로우
-    },
-    {
-        "title": "🔍 [지원] 마스터 점검 2차 오류\n👤 담당: 김민정\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
-        "start": "2026-06-30", "color": "#F1948A"  # 파스텔 핑크레드
+        "title": "🏷️ [지원] ESL 도입 희망점\n👤 담당: 나영화\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
+        "start": "2026-07-13", "color": "#C39BD3"  # 파스텔 퍼플
     }
 ]
 
