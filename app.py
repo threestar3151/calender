@@ -2,7 +2,23 @@ import streamlit as st
 from streamlit_calendar import calendar
 
 st.set_page_config(page_title="GS25 업무 스케줄", layout="wide")
-st.title("🗓️ GS25 부문 취합 및 마감 스케줄")
+st.title("🗓️ GS25 부문 취합 및 마감 스케줄 (통합본)")
+
+# 💡 월 이동을 위한 선택 필터 추가
+col1, col2 = st.columns([1, 4])
+with col1:
+    month_options = {
+        "2026년 4월": "2026-04-01",
+        "2026년 5월": "2026-05-01",
+        "2026년 6월": "2026-06-01",
+        "2026년 7월": "2026-07-01",
+        "2026년 8월": "2026-08-01",
+        "2026년 9월": "2026-09-01",
+        "2026년 10월": "2026-10-01",
+        "2026년 11월": "2026-11-01",
+    }
+    # 기본값을 현재 월인 11월(index 7)로 세팅하되, 과거 월 선택 시 즉시 이동
+    selected_month = st.selectbox("🔍 이동할 월 선택:", list(month_options.keys()), index=7)
 
 calendar_css = """
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700&display=swap');
@@ -17,16 +33,22 @@ calendar_css = """
 .fc-event-title {
     font-family: 'Nanum Gothic', sans-serif !important;
 }
+/* 리스트 뷰에서 날짜 색상 등 가시성 확보 */
+.fc-list-event-title {
+    font-family: 'Nanum Gothic', sans-serif !important;
+    font-size: 0.9em !important;
+}
 @media (max-width: 768px) {
     .fc-event-title { font-size: 0.75em !important; }
 }
 """
 
 calendar_events = [
-    # --- 과거 누적 데이터 (4월 ~ 10월 4주차 전체 포함) ---
+    # --- 4월 데이터 ---
     {"title": "📢 [마케팅] 토스 설치\n👤 담당: 최수민\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-30", "color": "#D98880"},
     {"title": "🧼 [지원] 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-04-27", "color": "#7FB3D5"},
     {"title": "🥤 [MD] OSC 장려금\n👤 담당: 이종혁\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-04-28", "color": "#7DCEA0"},
+    # --- 5월 데이터 ---
     {"title": "🏪 [지원] 특화매대 도입\n👤 담당: 권순백\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#F7DC6F"},
     {"title": "🛵 [O4O] 배민/쿠팡 오픈\n👤 담당: 상현수\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-11", "color": "#FAD7A0"},
     {"title": "🛵 [O4O] 배달/픽업 8차\n👤 담당: 박정은\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-18", "color": "#AED6F1"},
@@ -40,6 +62,7 @@ calendar_events = [
     {"title": "🛒 [지원] 6월 장보기 추가\n👤 담당: 양희진\n📝 방법: 시스템\n🎯 주체: OFC개별", "start": "2026-05-25", "color": "#F8C471"},
     {"title": "🍦 [MD] 6월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-25", "color": "#BB8FCE"},
     {"title": "❄️ [MD] 디핀다트 냉동고\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-05-25", "color": "#73C6B6"},
+    # --- 6월 데이터 ---
     {"title": "🔍 [지원] 마스터 전수점검 오류\n👤 담당: 김민정\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-05", "color": "#E59866"},
     {"title": "📺 [기타] 리테일미디어 설치\n👤 담당: 윤광복/오봉식\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-08", "color": "#C39BD3"},
     {"title": "📱 [마케팅] 지역화폐 MPM\n👤 담당: 양소연\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-08", "color": "#F1948A"},
@@ -67,6 +90,7 @@ calendar_events = [
     {"title": "🛵 [O4O] 배달/픽업 11차\n👤 담당: 홍민규\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#85C1E9"},
     {"title": "🛒 [지원] 7월 장보기 추가\n👤 담당: 양희진\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-06-29", "color": "#F7DC6F"},
     {"title": "🔍 [지원] 마스터 점검 2차 오류\n👤 담당: 김민정\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-06-30", "color": "#F1948A"},
+    # --- 7월 데이터 ---
     {"title": "🎒 [지원] 펩시 보냉백 발주\n👤 담당: 임명섭\n📝 방법: 시스템\n🎯 주체: OFC개별", "start": "2026-07-05", "color": "#85C1E9"},
     {"title": "📸 [MD] 7월 엔드OSC 사진\n👤 담당: 이종혁\n📝 방법: 시스템\n🎯 주체: OFC개별", "start": "2026-07-10", "color": "#F8C471"},
     {"title": "🏷️ [지원] ESL 도입 희망점\n👤 담당: 나영화\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-07-13", "color": "#C39BD3"},
@@ -84,6 +108,7 @@ calendar_events = [
     {"title": "🎁 [지원] 프로모션 개인정보\n👤 담당: 장한솔\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-07-27", "color": "#D7BDE2"},
     {"title": "🧼 [지원] 8월 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-07-27", "color": "#A3E4D7"},
     {"title": "👤 [지원] 실운영자 정보 2차\n👤 담당: 김동욱\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-07-27", "color": "#F5CBA7"},
+    # --- 8월 데이터 ---
     {"title": "❤️ [지원] 자동심장충격기 현황\n👤 담당: 이경준\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-08-03", "color": "#F1948A"},
     {"title": "📚 [교육] 27년 멘토점 추천\n👤 담당: 김다빈\n📝 방법: 엑셀\n🎯 주체: 영업팀", "start": "2026-08-10", "color": "#82E0AA"},
     {"title": "🛵 [O4O] 배달/픽업 14차\n👤 담당: 홍민규\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-08-18", "color": "#AED6F1"},
@@ -95,6 +120,7 @@ calendar_events = [
     {"title": "🛒 [지원] 9월 장보기 추가\n👤 담당: 양희진\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-08-30", "color": "#F7DC6F"},
     {"title": "🍜 [MD] 농심 라면 선물세트\n👤 담당: 김윤지\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-08-31", "color": "#FAD7A0"},
     {"title": "🧼 [지원] 9월 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-08-31", "color": "#A3E4D7"},
+    # --- 9월 데이터 ---
     {"title": "🗑️ [지원] 점두 유휴집기 철거\n👤 담당: 이민석\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-09-04", "color": "#E59866"},
     {"title": "🛑 [O4O] 추석 사전예약 미운영\n👤 담당: 김대영/임혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-09-07", "color": "#AED6F1"},
     {"title": "🥟 [MD] 호빵기 운영점포 (16시)\n👤 담당: 전용성\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-09-07", "color": "#F5B041"},
@@ -108,45 +134,34 @@ calendar_events = [
     {"title": "🍦 [MD] 10월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-09-21", "color": "#FAD7A0"},
     {"title": "🧼 [지원] 10월 선도위생 제외\n👤 담당: 이충언\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-09-21", "color": "#A3E4D7"},
     {"title": "🛒 [기타] 11월 빼빼로 이동진열대\n👤 담당: 김치영\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-09-30", "color": "#F7DC6F"},
+    # --- 10월 데이터 ---
     {"title": "⚽ [MD] 스포츠토토 갱신서류\n👤 담당: 이수빈\n📝 방법: PPT\n🎯 주체: 부문지원팀", "start": "2026-10-05", "color": "#C39BD3"},
     {"title": "📸 [MD] 10월 엔드OSC 사진\n👤 담당: 이종혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-07", "color": "#F8C471"},
     {"title": "🧣 [지원] 따뜻한 점포 사전점검\n👤 담당: 홍인기\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-26", "color": "#E59866"},
     {"title": "📊 [지원] 9월 재고조사 지연점\n👤 담당: 유찬울\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-19", "color": "#A9DFBF"},
     {"title": "🍦 [MD] 11월 아크 매출활성화\n👤 담당: 이주용\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-19", "color": "#FAD7A0"},
     {"title": "🍗 [MD] 9월 치킨25 소급\n👤 담당: 최원필\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-31", "color": "#F7DC6F"},
-    {"title": "❤️ [지원] 자동심장충격기 현황\n👤 담당: 이경준\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-11-02", "color": "#F1948A"},
     {"title": "🛵 [O4O] 배달/픽업 16차\n👤 담당: 홍민규\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-26", "color": "#AED6F1"},
     {"title": "🛒 [지원] 11월 장보기 추가\n👤 담당: 양희진\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-26", "color": "#F7DC6F"},
     {"title": "📦 [MD] 장기OFF 택배 철수\n👤 담당: 이경환\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-26", "color": "#C39BD3"},
     {"title": "🍜 [지원] 면류 프로모션 증액\n👤 담당: 장한솔\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-10-26", "color": "#A3E4D7"},
     {"title": "🍫 [MD] 빼빼로 매대 5종\n👤 담당: 신민기\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-10-26", "color": "#F5B041"},
-
-    # --- 10월 5주차 신규 데이터 (총 5건) ---
-    {
-        "title": "🍗 [MD] 즉석구이기 2차\n👤 담당: 배승섭\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", 
-        "start": "2026-11-02", "color": "#F1948A"  # 파스텔 레드/핑크
-    },
-    {
-        "title": "📸 [MD] 11월 엔드OSC 사진\n👤 담당: 이종혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-11-04", "color": "#76D7C4"  # 파스텔 민트/아쿠아
-    },
-    {
-        "title": "💊 [MD] 알디콤&컨디션 행사\n👤 담당: 고웅\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-11-06", "color": "#FAD7A0"  # 파스텔 피치
-    },
-    {
-        "title": "🛠️ [지원] 구BI 어닝 교체\n👤 담당: 김치영\n📝 방법: 엑셀\n🎯 주체: 지역팀", 
-        "start": "2026-11-06", "color": "#A9DFBF"  # 파스텔 그린
-    },
-    {
-        "title": "🚨 [기타] 점포 안전점검\n👤 담당: 이황호\n📝 방법: OFC포탈\n🎯 주체: OFC개별", 
-        "start": "2026-11-08", "color": "#C39BD3"  # 파스텔 퍼플
-    }
+    # --- 11월 데이터 ---
+    {"title": "❤️ [지원] 자동심장충격기 현황\n👤 담당: 이경준\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-11-02", "color": "#F1948A"},
+    {"title": "🍗 [MD] 즉석구이기 2차\n👤 담당: 배승섭\n📝 방법: 엑셀\n🎯 주체: 부문지원팀", "start": "2026-11-02", "color": "#F1948A"},
+    {"title": "📸 [MD] 11월 엔드OSC 사진\n👤 담당: 이종혁\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-11-04", "color": "#76D7C4"},
+    {"title": "💊 [MD] 알디콤&컨디션 행사\n👤 담당: 고웅\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-11-06", "color": "#FAD7A0"},
+    {"title": "🛠️ [지원] 구BI 어닝 교체\n👤 담당: 김치영\n📝 방법: 엑셀\n🎯 주체: 지역팀", "start": "2026-11-06", "color": "#A9DFBF"},
+    {"title": "🚨 [기타] 점포 안전점검\n👤 담당: 이황호\n📝 방법: OFC포탈\n🎯 주체: OFC개별", "start": "2026-11-08", "color": "#C39BD3"}
 ]
 
 calendar_options = {
-    "headerToolbar": {"left": "prev,next today", "center": "title", "right": "dayGridMonth,listMonth"},
-    "initialView": "dayGridMonth", "locale": "ko", "height": "auto",
+    # 우측 버튼에 'listYear(1년치 요약본 보기)' 기능 추가
+    "headerToolbar": {"left": "prev,next today", "center": "title", "right": "dayGridMonth,listMonth,listYear"},
+    "initialView": "dayGridMonth", 
+    "initialDate": month_options[selected_month], # 필터에서 선택한 월로 즉시 캘린더 이동
+    "locale": "ko", 
+    "height": "auto",
 }
 
 calendar(events=calendar_events, options=calendar_options, custom_css=calendar_css)
